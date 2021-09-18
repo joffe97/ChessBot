@@ -2,7 +2,6 @@ import pygame
 import math
 import piece
 import game
-import time
 from pieceImages import PieceImages
 
 
@@ -30,7 +29,6 @@ class Graphics:
     def game_loop(self):
         run = True
         clock = pygame.time.Clock()
-        first = True
 
         while run:
             clock.tick(self.fps)
@@ -42,9 +40,6 @@ class Graphics:
                     self.game.mouse_down(self.get_clicked_route())
 
             self.redraw_window()
-            if first:
-                first = False
-                time.sleep(3)
             self.game.bot_move()
 
     def redraw_window(self):
@@ -72,12 +67,9 @@ class Graphics:
         selected = self.game.selected_route
         if selected is None:
             return
-        # print()
         for move in selected.available_moves:
             x, y = self.get_routeno_coords(move)
-            # print(f"{x}, {y}")
             a, b, c, d = self.get_route_rect_coords(x, y)
-            # print(f"{a},{b},{c},{d}")
             pygame.draw.rect(self.screen, COLOR_RED, self.get_route_rect_coords(x, y), 3)
 
     def blit_middle(self, img: pygame.surface.Surface, middle_pos: tuple[int, int]):
